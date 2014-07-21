@@ -1,0 +1,72 @@
+<script src="bower_components/lodash/dist/lodash.js"></script>
+<script >
+    var htmlGenerator = {
+        link : function(data) {
+            var text = "<a href=<%= href %> title= <%= title %>> <%= label %> </a>";
+            return _.template(text,{
+                href : data["href"],
+                title : data["title"],
+                label : data["label"]
+            })
+         },
+        paragraph: function(data) {
+            var text = "<p><%= lable %></p>";
+            return _.template(text, {
+                label : data["label"]
+            })
+        },
+
+
+        list: function(data) {
+            var text = "<<%= type %><% _(items).forEach(function(item) { %><li><%= item['label'] %></li><% }); %> </<%= type %>>";
+            return _.template(text, {
+                type : data["type"],
+                items : data["children"]
+            })
+        },
+
+        tag: function(data) {
+
+            var
+                attrTemplate = "<%= key %>='<%= value %>'",
+                attributes = [];
+
+            if(data.attributes) {
+                data.attributes.forEach(function(attr) {
+                    attributes.push(_.template(attrTemplate, attr));
+                });
+            }
+            if(attributes.length > 0){
+                attributes = " " + attributes.join(" ")
+            }
+            else {
+                attributes = ""
+            }
+
+            var text = "<<%= tagName %><%= attributes %>><%= data %></<%= tagName %>>"
+
+            return _.template(text,{
+                tagName : data["tagName"],
+                data: data["data"],
+                attributes : attributes
+            })
+        }
+};
+
+var element = htmlGenerator.tag({
+    tagName: "div",
+    data: htmlGenerator.tag({
+        tagName: "h1",
+        data: "Hello!"
+    }),
+    attributes: [{
+        key: "class",
+        value: "container"
+    }, {
+        key: "id",
+        value: "main-container"
+    }]
+});
+        console.log(element);
+
+</script>

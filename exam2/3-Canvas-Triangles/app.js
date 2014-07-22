@@ -6,7 +6,9 @@ var ctx = canvas.getContext('2d');
 var canvasWidth = $("#canvas").width();
 var canvasHeight = $("#canvas").height();
 
-var points = []
+var points = [],
+    fillColor = "#000000",
+    bgColor =  "#ffffff";
 
 function Tile(x, y, ctx) {
         this.x = x;
@@ -14,26 +16,21 @@ function Tile(x, y, ctx) {
         this.ctx = ctx;
 
         this.print = function() {
-            ctx.fillStyle = "red";
             ctx.fillRect(this.x,this.y, 1, 1);
-        }
+          }
 }
-
-function print_line(point1, point2, ctx) {
-      ctx.fillStyle = "red";
-      ctx.beginPath();
-      ctx.moveTo(point1.x, point1.y);
-      ctx.lineTo(point2.x, point2.y);
-      ctx.stroke();
-}
-
 
 var make_triangle = function(pointsArr){
   if (isItTriangle(pointsArr[0],pointsArr[1],pointsArr[2])) {
-    print_line(pointsArr[0], pointsArr[1], ctx);
-    print_line(pointsArr[1], pointsArr[2], ctx);
-    print_line(pointsArr[2], pointsArr[0], ctx);
-  }
+    ctx.beginPath();
+    ctx.moveTo(pointsArr[0].x, pointsArr[0].y);
+    ctx.lineTo(pointsArr[1].x, pointsArr[1].y);
+    ctx.lineTo(pointsArr[2].x, pointsArr[2].y);
+    ctx.closePath();
+
+    ctx.fillStyle = fillColor;
+    ctx.fill();
+}
 
 }
 
@@ -69,5 +66,31 @@ $("#canvas").on("click",function( event ){
 })
 
 $("#clear").on("click", function(){
+  $('#canvas').css('background-color', "#ffffff");
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 })
+
+$("#fill-color").on("change",function(){
+  fillColor = this.value;
+})
+
+$("#background-color").on("change",function(){
+  bgColor = this.value;
+  $('#canvas').css('background-color', bgColor);
+})
+
+$("#save").on("click", function(){
+   name = "saved";
+   localStorage.setItem(name,canvas.toDataURL());
+
+   $("#saved-images").append("<option>" + name + "</option>");
+})
+
+$("#load").on("click", function(){
+  var img = new Image();
+  img.onload=function(){
+    ctx.drawImage(img,0,0);
+  }
+  img.src=localStorage.getItem("saved");
+})
+

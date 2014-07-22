@@ -2,6 +2,10 @@
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext('2d');
+
+var canvasWidth = $("#canvas").width();
+var canvasHeight = $("#canvas").height();
+
 var points = []
 
 function Tile(x, y, ctx) {
@@ -23,15 +27,6 @@ function print_line(point1, point2, ctx) {
       ctx.stroke();
 }
 
-$("#canvas").on("click",function( event ){
-  var p = new Tile(event.pageX, event.pageY, ctx);
-  points.push(p);
-  if (points.length === 3){
-    make_triangle(points);
-    points.splice(0,3);
-  }
-  p.print();
-})
 
 var make_triangle = function(pointsArr){
   if (isItTriangle(pointsArr[0],pointsArr[1],pointsArr[2])) {
@@ -61,3 +56,18 @@ var side_length = function(point1, point2) {
       b = point1.y - point2.y;
   return Math.sqrt(a*a + b*b);
 }
+
+
+$("#canvas").on("click",function( event ){
+  var p = new Tile(event.pageX, event.pageY, ctx);
+  points.push(p);
+  if (points.length === 3){
+    make_triangle(points);
+    points.splice(0,3);
+  }
+  p.print();
+})
+
+$("#clear").on("click", function(){
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+})

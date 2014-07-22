@@ -4,7 +4,7 @@ var data = require("./data");
 var _ = require("./node_modules/lodash/lodash")
 
 var grouped_students = _.groupBy(data,function(user){
-  return user.fields.date + "-" + user.fields.mac;
+  return user.fields.date + "-" + user.fields.student;
 });
 
 _.keys(grouped_students).forEach(function(key){

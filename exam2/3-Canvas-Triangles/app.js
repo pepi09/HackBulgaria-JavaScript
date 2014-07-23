@@ -8,7 +8,8 @@ var canvasHeight = $("#canvas").height();
 
 var points = [],
     fillColor = "#000000",
-    bgColor =  "#ffffff";
+    bgColor =  "#ffffff",
+    name = localStorage.key(0);
 
 function Tile(x, y, ctx) {
         this.x = x;
@@ -54,6 +55,11 @@ var side_length = function(point1, point2) {
   return Math.sqrt(a*a + b*b);
 }
 
+$(document).ready(function(){
+
+for ( var i = 0, len = localStorage.length; i < len; ++i ) {
+  $("#saved-images").append("<option>" + localStorage.key(i) + "</option>");
+}
 
 $("#canvas").on("click",function( event ){
   var p = new Tile(event.pageX, event.pageY, ctx);
@@ -80,17 +86,22 @@ $("#background-color").on("change",function(){
 })
 
 $("#save").on("click", function(){
-   name = "saved";
-   localStorage.setItem(name,canvas.toDataURL());
+   var new_name = prompt("Set name:");
+   localStorage.setItem(new_name,canvas.toDataURL());
+   $("#saved-images").append("<option>" + new_name + "</option>");
+})
 
-   $("#saved-images").append("<option>" + name + "</option>");
+$("#saved-images").on("change", function(){
+  name = this.value;
 })
 
 $("#load").on("click", function(){
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
   var img = new Image();
-  img.onload=function(){
+  img.onload = function(){
     ctx.drawImage(img,0,0);
   }
-  img.src=localStorage.getItem("saved");
+  img.src = localStorage.getItem(name);
 })
 
+})

@@ -5,13 +5,6 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 
 <canvas id="canvas" width="400" height="400" style="border : 1px solid;"></canvas>
-
-<button id="save"> Save </button>
-
-<select id="saved-images"> </select>
-
-<button id="load"> Load </button>
-<button id="clear"> Clear canvas </button>
 <br>
 <b>
 <label for="background-color">Background color:</label>
@@ -19,6 +12,15 @@
 
 <label for="fill-color">Fill color:</label>
 <input id="fill-color" type="color" value="#000000"/>
+
+<button id="clear" class="css3button"> Clear canvas </button>
+
+<br>
+<br>
+<button id="save" class="css3button"> Save to local storage </button>
+
+<select id="saved-images" name="select image"> </select>
+<button id="load" class="css3button"> Load canvas </button>
 
 <script src="app.js"></script>
 </html>

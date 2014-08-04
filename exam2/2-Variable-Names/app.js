@@ -1,10 +1,13 @@
 $(document).ready(function() {
 
     var source   = $("#input-template").html(),
-        template = Handlebars.compile(source);
+        template = Handlebars.compile(source),
+        baseURL = "http://localhost:8090",
+        inp = ".input-place",
+        btn = ".update-btn";
 
     $.ajax({
-        url: "http://localhost:8080/names",
+        url: baseURL + "/names",
         type : "GET",
         contentType : "application/json",
         dataType : "json",
@@ -19,16 +22,16 @@ $(document).ready(function() {
             $("#input").append(html);
         });
 
-        $(".input-place").on("change", function() {
-            $(".update-btn").filter("#" + this.id).removeAttr("disabled");
+        $(inp).on("change", function() {
+            $(btn).filter("#" + this.id).removeAttr("disabled");
         })
 
-        $(".update-btn").on("click", function() {
-            var new_name = $(".input-place").filter("#" + this.id).val();
+        $(btn).on("click", function() {
+            var new_name = $(inp).filter("#" + this.id).val();
             console.log(new_name);
 
             $.ajax({
-                url : "http://localhost:8080/name",
+                url : baseURL + "/name",
                 type : "POST",
                 contentType : "application/json",
                 dataType : "json",

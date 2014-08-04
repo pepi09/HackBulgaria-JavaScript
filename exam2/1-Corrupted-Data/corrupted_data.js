@@ -1,7 +1,7 @@
 "use strict";
 
-var data = require("./data");
-var _ = require("./node_modules/lodash/lodash")
+var data = require("./data"),
+       _ = require("./node_modules/lodash/lodash");
 
 var grouped_students = _.groupBy(data,function(user){
   return user.fields.date + "-" + user.fields.student;

@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
-    var source   = $("#input-template").html();
-    var template = Handlebars.compile(source);
+    var source   = $("#input-template").html(),
+        template = Handlebars.compile(source);
 
     $.ajax({
         url: "http://localhost:8080/names",

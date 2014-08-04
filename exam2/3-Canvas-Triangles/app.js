@@ -1,12 +1,12 @@
 "use strict";
+var
+    canvas = document.getElementById("canvas"),
+    ctx = canvas.getContext('2d'),
 
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext('2d');
+    canvasWidth = $("#canvas").width(),
+    canvasHeight = $("#canvas").height(),
 
-var canvasWidth = $("#canvas").width();
-var canvasHeight = $("#canvas").height();
-
-var points = [],
+    points = [],
     fillColor = "#000000",
     bgColor =  "#ffffff",
     name = localStorage.key(0);

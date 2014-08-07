@@ -72,9 +72,16 @@ var food = (function() {
             head = new_head;
         }
 
+        var tryEat = function() {
+        if (head.x === window.food.position.x && head.y === window.food.position.y) {
+            tail.push(food.position);
+            food.place();
+        }
+        };
         return {
             print : print,
             move : move,
+            tryEat : tryEat
         }
     }(ctx))
 
@@ -84,25 +91,24 @@ var food = (function() {
     var direction = "right";
     setInterval(function(){
 
-    $(document).keydown(function(event){
-      if(event.keyCode === 39 && direction != "left"){
-        direction = "right";
-        food.place();
-        food.print();
-      }
+    $(document).keydown(function(event) {
+        if (event.keyCode === 39 && direction != "left") {
+            direction = "right";
+        }
 
-      if(event.keyCode === 37 && direction != "right"){
-        direction = "left";
-      }
+        if (event.keyCode === 37 && direction != "right") {
+            direction = "left";
+        }
 
-      if(event.keyCode === 38 && direction != "down"){
-        direction = "up";
-      }
+        if (event.keyCode === 38 && direction != "down") {
+            direction = "up";
+        }
 
-      if(event.keyCode === 40 && direction != "up"){
-        direction = "down";
-      }
+        if (event.keyCode === 40 && direction != "up") {
+            direction = "down";
+        }
     })
+
 
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     snake.move(direction);
@@ -113,7 +119,7 @@ var food = (function() {
 
 
 
-    }, 100);
+}, 100);
 
 </script>
 </html>

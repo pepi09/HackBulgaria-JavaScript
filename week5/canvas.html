@@ -22,21 +22,21 @@
         }
     }
 
-    var food = (function(){
-        this.place = function(){
-            var x = Math.floor(Math.random() * canvasWidth + 1);
-            var y = Math.floor(Math.random() * canvasHeight +1);
-            this.point = new Tile(100, 273, 10, ctx);
-        }
-        this.print = function(){
-            this.point.print();
-        }
+var food = (function() {
+   var place = function() {
+        var x = Math.floor(Math.random() * canvasWidth / 10);
+        var y = Math.floor(Math.random() * canvasHeight / 10);
+        this.position = new Tile(x, y, 10, ctx, "green");
+    };
+   var print = function() {
+        this.position.print();
+    };
 
-        return {
-            place : place,
-            print : print,
-        }
-    }(ctx))
+    return {
+        place: place,
+        print: print,
+    };
+}(ctx));
 
     var snake = (function(){
         var tail = [],
@@ -106,7 +106,9 @@
 
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     snake.move(direction);
+    snake.tryEat();
     snake.print();
+
     food.print();
 
 
